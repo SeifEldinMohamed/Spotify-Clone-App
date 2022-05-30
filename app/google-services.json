@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "247424184994",
+    "project_id": "amr-diab-world",
+    "storage_bucket": "amr-diab-world.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:247424184994:android:a6960d2640a9955f2a1dfb",
+        "android_client_info": {
+          "package_name": "com.seif.spotifyclone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "247424184994-n1m1c19dfvlui0rku8veejfldldgmpq3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDR6CzBZktxJMIBPeZnkoIjraXvO-qEQGc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "247424184994-n1m1c19dfvlui0rku8veejfldldgmpq3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
