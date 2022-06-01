@@ -5,7 +5,7 @@ import com.seif.spotifyclone.data.entities.Song
 import com.seif.spotifyclone.utils.Constants.SONG_COLLECTION
 import kotlinx.coroutines.tasks.await
 
-class RemoteDatabase {
+class MusicDatabase {
     private val fireStore = FirebaseFirestore.getInstance()
     private val songCollection = fireStore.collection(SONG_COLLECTION)
 
