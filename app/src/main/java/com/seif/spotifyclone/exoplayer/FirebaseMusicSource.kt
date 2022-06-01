@@ -72,8 +72,6 @@ class FirebaseMusicSource @Inject constructor(
 
     }
 
-
-
     private val onReadyListeners = mutableListOf<(Boolean) -> Unit>() // can schedule actions that we want to perform when that music source finished
     private var state: State = STATE_CREATED
     set(value) { // whenever we set the value of our state to something else so we will trigger this setter

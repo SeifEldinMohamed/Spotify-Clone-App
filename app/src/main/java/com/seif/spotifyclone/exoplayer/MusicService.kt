@@ -9,6 +9,7 @@ import androidx.media.MediaBrowserServiceCompat
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.upstream.DefaultDataSource
+import com.seif.spotifyclone.exoplayer.callbacks.MusicPlayerNotificationListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +26,8 @@ class MusicService @Inject constructor(
     private val exoPlayer: ExoPlayer
 ) : MediaBrowserServiceCompat() { // it's called MediaBrowserServiceCompat bec of loadChildren function
 
+    private lateinit var musicNotificationManager: MusicNotificationManager
+
     // coroutine scope will be limit to the life time of our service
     private val serviceJob = Job()
     private val serviceScope =
@@ -33,6 +36,8 @@ class MusicService @Inject constructor(
     // current session of playing music
     private lateinit var mediaSession: MediaSessionCompat
     private lateinit var mediaSessionConnector: MediaSessionConnector // class will use to connect to the above media session
+
+    var isForegroundService = false
 
     @SuppressLint("UnspecifiedImmutableFlag")
     override fun onCreate() {
@@ -48,6 +53,15 @@ class MusicService @Inject constructor(
         }
 
         sessionToken = mediaSession.sessionToken
+
+        musicNotificationManager = MusicNotificationManager(
+            this,
+            mediaSession.sessionToken,
+            MusicPlayerNotificationListener(this)
+        ) { // will be called when current song switched
+            // update current song duration so we can observe on that in our fragments
+        }
+
         mediaSessionConnector = MediaSessionConnector(mediaSession)
         mediaSessionConnector.setPlayer(exoPlayer)
     }
