@@ -24,7 +24,7 @@ class FirebaseMusicSource @Inject constructor(
     private val musicDatabase: MusicDatabase
 ) {
 
-    private var songs = emptyList<MediaMetadataCompat>()
+    var songs = emptyList<MediaMetadataCompat>()
     // gets all of our songs objects from firebase
     suspend fun fetchMetaData() = withContext(Dispatchers.IO){
         state = STATE_INITIALIZING
