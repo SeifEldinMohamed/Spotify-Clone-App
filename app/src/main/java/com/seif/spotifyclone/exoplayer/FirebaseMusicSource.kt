@@ -69,8 +69,7 @@ class FirebaseMusicSource @Inject constructor(
             .setIconUri(song.description.iconUri)
             .build()
         MediaBrowserCompat.MediaItem(desc, FLAG_PLAYABLE)   // can be item as a song or browsable like a album, recommended section, plylist
-
-    }
+    }.toMutableList()
 
     private val onReadyListeners = mutableListOf<(Boolean) -> Unit>() // can schedule actions that we want to perform when that music source finished
     private var state: State = STATE_CREATED
