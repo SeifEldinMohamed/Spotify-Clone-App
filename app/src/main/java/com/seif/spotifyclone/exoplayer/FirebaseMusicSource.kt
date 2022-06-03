@@ -24,7 +24,7 @@ class FirebaseMusicSource @Inject constructor(
     private val musicDatabase: MusicDatabase
 ) {
 
-    var songs = emptyList<MediaMetadataCompat>()
+    var songs = emptyList<MediaMetadataCompat>() // MediaMetadataCompat: Contains metadata about an item, such as the title, artist, etc.
     // gets all of our songs objects from firebase
     suspend fun fetchMetaData() = withContext(Dispatchers.IO){
         state = STATE_INITIALIZING
@@ -47,13 +47,12 @@ class FirebaseMusicSource @Inject constructor(
                 .build()
         }
         state = STATE_INITIALIZED
-
     }
     // we need to make a concatenating music source (list of several single music source)
     fun asMediaSource(dataSourceFactory: DefaultDataSource.Factory): ConcatenatingMediaSource{
         val concatenatingMediaSource = ConcatenatingMediaSource()
         songs.forEach { song ->
-            val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
+            val mediaSource: ProgressiveMediaSource = ProgressiveMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(MediaItem.fromUri(song.getString(METADATA_KEY_MEDIA_URI)))
             concatenatingMediaSource.addMediaSource(mediaSource)
         }
@@ -70,6 +69,7 @@ class FirebaseMusicSource @Inject constructor(
             .build()
         MediaBrowserCompat.MediaItem(desc, FLAG_PLAYABLE)   // can be item as a song or browsable like a album, recommended section, plylist
     }.toMutableList()
+
 
     private val onReadyListeners = mutableListOf<(Boolean) -> Unit>() // can schedule actions that we want to perform when that music source finished
     private var state: State = STATE_CREATED

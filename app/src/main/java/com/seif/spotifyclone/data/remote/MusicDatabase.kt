@@ -19,4 +19,9 @@ class MusicDatabase {
 }
 
 // await() : gives us an object of type any
+// Awaits the completion of the task without blocking a thread.
+// This suspending function is cancellable. If the Job of the current coroutine is cancelled
+// or completed while this suspending function is waiting, this function stops waiting for
+// the completion stage and immediately resumes with CancellationException.
+
 // toObjects(): specify the class of a specific item in our list
