@@ -17,6 +17,7 @@ import dagger.hilt.android.scopes.ServiceScoped
 @InstallIn(ServiceComponent::class)
 object ServiceModule {
 
+
     @ServiceScoped
     @Provides
     fun provideMusicDatabase() = MusicDatabase()

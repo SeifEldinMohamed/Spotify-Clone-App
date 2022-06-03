@@ -51,7 +51,7 @@ class MusicService @Inject constructor(
     private lateinit var musicPlayerEventListener: MusicPlayerEventListener
 
     companion object {
-        var currenctSongDuration = 0L
+        var currentSongDuration = 0L
             private set // we can only change the value from within the service but we can read it from outside the service
     }
 
@@ -81,7 +81,7 @@ class MusicService @Inject constructor(
             MusicPlayerNotificationListener(this)
         ) { // will be called when current song switched
             // update current song duration so we can observe on that in our fragments
-            currenctSongDuration = exoPlayer.duration
+            currentSongDuration = exoPlayer.duration
         }
 
         // will called every time user choose a new song

@@ -60,7 +60,7 @@ class FirebaseMusicSource @Inject constructor(
         return concatenatingMediaSource
     }
 
-    fun asMediaItems() = songs.map { song->
+    fun asMediaItems() = songs.map { song ->
         val desc = MediaDescriptionCompat.Builder()
             .setMediaUri(song.getString(METADATA_KEY_MEDIA_URI).toUri())
             .setTitle(song.description.title)
@@ -78,8 +78,8 @@ class FirebaseMusicSource @Inject constructor(
             synchronized(onReadyListeners){// what happened inside this block will only be accessed from same thread
                 field = value   //  field : current value of the state
                 // loop over each of these lambda functions
-                onReadyListeners.forEach {  lisitener ->
-                    lisitener(state == STATE_INITIALIZED)
+                onReadyListeners.forEach {  listener ->
+                    listener(state == STATE_INITIALIZED)
 
                 }
             }

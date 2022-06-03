@@ -2,7 +2,6 @@ package com.seif.spotifyclone.exoplayer
 
 import android.content.ComponentName
 import android.content.Context
-import android.media.browse.MediaBrowser
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaMetadataCompat
@@ -15,7 +14,7 @@ import com.seif.spotifyclone.utils.Event
 import com.seif.spotifyclone.utils.Resource
 
 
-class MusicServiceConnection(
+class MusicServiceConnection( // communicate with viewModel
     context: Context
 ) {
     private val _isConnected =
@@ -30,9 +29,9 @@ class MusicServiceConnection(
         MutableLiveData<PlaybackStateCompat?>() // where the current player in playing or not
     val playbackState: LiveData<PlaybackStateCompat?> = _playbackState
 
-    private val _curPlayingSong =
+    private val _currentPlayingSong =
         MutableLiveData<MediaMetadataCompat?>() // contains metadata information about currently playing song
-    val curPlayingSong: LiveData<MediaMetadataCompat?> = _curPlayingSong
+    val currentPlayingSong: LiveData<MediaMetadataCompat?> = _currentPlayingSong
 
     lateinit var mediaController: MediaControllerCompat
 
@@ -65,7 +64,7 @@ class MusicServiceConnection(
 
         override fun onConnected() { // once music serviec connection is active it will be called
             mediaController = MediaControllerCompat(context, mediaBrowser.sessionToken).apply {
-                registerCallback(MediaContollerCallback())
+                registerCallback(MediaControllerCallback())
             }
             _isConnected.postValue(Event(Resource.success(true)))
         }
@@ -91,14 +90,14 @@ class MusicServiceConnection(
         }
     }
 
-    private inner class MediaContollerCallback : MediaControllerCompat.Callback() {
+    private inner class MediaControllerCallback : MediaControllerCompat.Callback() {
 
         override fun onPlaybackStateChanged(state: PlaybackStateCompat?) { // when song paused or resumed
             _playbackState.postValue(state)
         }
 
         override fun onMetadataChanged(metadata: MediaMetadataCompat?) { // when song is skipped
-            _curPlayingSong.postValue(metadata)
+            _currentPlayingSong.postValue(metadata)
         }
 
         override fun onSessionEvent(
