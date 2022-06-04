@@ -11,7 +11,7 @@ import com.seif.spotifyclone.utils.DiffUtilCallBack
 
 class SwipeSongAdapter : RecyclerView.Adapter<SwipeSongAdapter.MyViewHolder>() {
 
-    private var songs = emptyList<Song>()
+    var songs = emptyList<Song>()
 
     inner class MyViewHolder(private val binding: SwipeRowItemBinding) :
         RecyclerView.ViewHolder(binding.root) {

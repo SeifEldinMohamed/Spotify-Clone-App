@@ -31,7 +31,6 @@
         android:id="@+id/viewPagerSong"
         android:layout_width="0dp"
         android:layout_height="56dp"
-        android:background="@color/darkBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/playPauseImageView"
         app:layout_constraintStart_toEndOf="@+id/currentSongImageView" />
