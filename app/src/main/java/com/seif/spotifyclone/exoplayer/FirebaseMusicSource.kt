@@ -26,8 +26,15 @@ class FirebaseMusicSource @Inject constructor(
 
     var songs = emptyList<MediaMetadataCompat>() // MediaMetadataCompat: Contains metadata about an item, such as the title, artist, etc.
     // gets all of our songs objects from firebase
-    suspend fun fetchMetaData() = withContext(Dispatchers.IO){
+    suspend fun fetchMetaData() {
         state = STATE_INITIALIZING
+        fetchData()
+        state = STATE_INITIALIZED
+    }
+    //  that is because you call state = STATE_INITIALIZED when fetching data which
+    //  causes the setter method to be called and fires the listener with the initialized state
+
+    private suspend fun fetchData() = withContext(Dispatchers.IO){
         val allSongs: List<Song> = musicDatabase.getAllSongs()
         songs = allSongs.map { song ->
             MediaMetadataCompat.Builder()
@@ -37,8 +44,9 @@ class FirebaseMusicSource @Inject constructor(
                 .putString(METADATA_KEY_MEDIA_ID, song.mediaId)
                 .putString(METADATA_KEY_TITLE, song.title)
                 .putString(METADATA_KEY_DISPLAY_TITLE, song.title)
-                .putString(METADATA_KEY_ALBUM, song.album)
-                .putString(METADATA_KEY_YEAR, song.releasedYear)
+//                .putString(METADATA_KEY_ALBUM, song.album)
+//                .putString(METADATA_KEY_YEAR, song.releasedYear)
+//                .putString(METADATA_KEY_GENRE, song.type)
                 .putString(METADATA_KEY_ARTIST, song.singer)
                 .putString(METADATA_KEY_ALBUM_ARTIST, song.singer)
                 .putString(METADATA_KEY_DISPLAY_ICON_URI, song.imageUrl)
@@ -46,8 +54,8 @@ class FirebaseMusicSource @Inject constructor(
                 .putString(METADATA_KEY_MEDIA_URI, song.songUrl)
                 .build()
         }
-        state = STATE_INITIALIZED
     }
+
     // we need to make a concatenating music source (list of several single music source)
     fun asMediaSource(dataSourceFactory: DefaultDataSource.Factory): ConcatenatingMediaSource{
         val concatenatingMediaSource = ConcatenatingMediaSource()

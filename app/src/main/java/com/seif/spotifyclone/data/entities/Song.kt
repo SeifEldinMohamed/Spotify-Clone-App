@@ -4,9 +4,9 @@ data class Song(
     val mediaId: String = "",
     val title: String = "",
     val singer: String = "",
-    val album: String = "",
-    val type: String = "",
-    val releasedYear: String = "",
+//    val album: String = "",
+//    val type: String = "",
+//    val releasedYear: String = "",
     val songUrl: String = "",
     val imageUrl: String = "",
 )

@@ -17,7 +17,6 @@ import dagger.hilt.android.scopes.ServiceScoped
 @InstallIn(ServiceComponent::class)
 object ServiceModule {
 
-
     @ServiceScoped
     @Provides
     fun provideMusicDatabase() = MusicDatabase()
@@ -34,11 +33,12 @@ object ServiceModule {
     @Provides
     fun provideExoPlayer(
         @ApplicationContext context:Context,
-        audioAttributes: AudioAttributes
-    ) = ExoPlayer.Builder(context).apply {
-        setAudioAttributes(audioAttributes, true)
-        setHandleAudioBecomingNoisy(true) // pause our media player if the user plugs in his headphones bec it could be so noisy to teh user
-    }
+        audioAttributes: AudioAttributes     // pause our media player if the user plugs in his headphones bec it could be so noisy to teh user
+    ) = ExoPlayer.Builder(context).build().apply {
+            setAudioAttributes(audioAttributes, true)
+            setHandleAudioBecomingNoisy(true)
+        }
+
 
     @ServiceScoped
     @Provides

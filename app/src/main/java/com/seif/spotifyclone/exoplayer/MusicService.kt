@@ -27,11 +27,14 @@ import javax.inject.Inject
 private const val SERVICE_TAG = "MusicService"
 
 @AndroidEntryPoint
-class MusicService @Inject constructor(
-    private val dataSourceFactory: DefaultDataSource.Factory,
-    private val exoPlayer: ExoPlayer,
-    private val firebaseMusicSource: FirebaseMusicSource
-) : MediaBrowserServiceCompat() { // it's called MediaBrowserServiceCompat bec of loadChildren function
+class MusicService : MediaBrowserServiceCompat() { // it's called MediaBrowserServiceCompat bec of loadChildren function
+
+    @Inject
+    lateinit var dataSourceFactory: DefaultDataSource.Factory
+    @Inject
+    lateinit var exoPlayer: ExoPlayer
+    @Inject
+    lateinit var firebaseMusicSource: FirebaseMusicSource
 
     private lateinit var musicNotificationManager: MusicNotificationManager
 
@@ -118,6 +121,7 @@ class MusicService @Inject constructor(
     ) {
         val curSongIndex = if (currentPlayingSong == null) 0 else songs.indexOf(itemToPlay)
         exoPlayer.prepare(firebaseMusicSource.asMediaSource(dataSourceFactory))
+        ////////////////////////////////////////
         // exoPlayer.setMediaSource(firebaseMusicSource.asMediaSource(dataSourceFactory))
         exoPlayer.seekTo(curSongIndex, 0L) // start from the beginning
         exoPlayer.playWhenReady =

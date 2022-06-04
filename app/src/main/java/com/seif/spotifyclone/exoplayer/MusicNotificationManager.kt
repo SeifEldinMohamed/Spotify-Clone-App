@@ -39,15 +39,8 @@ class MusicNotificationManager(
             setSmallIcon(R.drawable.ic_music)
             setMediaSessionToken(sessionToken) // to give our notification manager access to our current media session in our music service to see changes happened in our music service
         }
-          //  setSmallIcon(R.drawable.ic_music)
-          //  setMediaSessionToken(sessionToken)
-
     }
-    //        R.string.notification_channel_name,
-    //        R.string.notification_channel_description,
-    //
-    //            DescriptionAdapter(mediaController),
-    //            notificationListener
+
 
     fun showNotification(player: Player) { // we will call this function in our music service class
         notificationManager.setPlayer(player)

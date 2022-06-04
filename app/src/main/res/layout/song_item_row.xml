@@ -20,6 +20,7 @@
         android:layout_marginRight="16dp"
         android:gravity="center|left"
         android:text="Playlist Title"
+        android:textColor="@color/white"
         android:layout_marginTop="8dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"

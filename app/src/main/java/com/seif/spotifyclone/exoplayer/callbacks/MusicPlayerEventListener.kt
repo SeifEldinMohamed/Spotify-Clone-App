@@ -9,29 +9,24 @@ class MusicPlayerEventListener(
     private val musicService: MusicService
 ) : Player.Listener {
 
-    @Deprecated("Deprecated in Java")
-    override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-        if(playbackState == Player.STATE_READY && !playWhenReady) {
-            musicService.stopForeground(false)
-        }
-    }
+
 
     /** replace down code to above
      * */
 
-//    override fun onPlaybackStateChanged(playbackState: Int) {
-//        super.onPlaybackStateChanged(playbackState)
-//        if(playbackState == Player.STATE_READY){
-//            musicService.stopForeground(false)
-//        }
-//    }
-//
-//    override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
-//        super.onPlayWhenReadyChanged(playWhenReady, reason)
-//        if(!playWhenReady){
-//            musicService.stopForeground(false)
-//        }
-//    }
+    override fun onPlaybackStateChanged(playbackState: Int) {
+        super.onPlaybackStateChanged(playbackState)
+        if(playbackState == Player.STATE_READY){
+            musicService.stopForeground(false)
+        }
+    }
+
+    override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
+        super.onPlayWhenReadyChanged(playWhenReady, reason)
+        if(!playWhenReady){
+            musicService.stopForeground(false)
+        }
+    }
 
     override fun onPlayerError(error: PlaybackException) {
         super.onPlayerError(error)
