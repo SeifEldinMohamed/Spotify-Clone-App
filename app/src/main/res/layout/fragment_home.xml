@@ -6,7 +6,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.HomeFragment">
 
-
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="@string/app_name"
+        app:titleTextColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <ProgressBar
         android:id="@+id/allSongsProgressBar"
         android:layout_width="wrap_content"
@@ -20,14 +31,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_AllSongs"
-        tools:itemCount="10"
-        tools:listitem="@layout/song_item_row"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:itemCount="10"
+        tools:listitem="@layout/song_item_row" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

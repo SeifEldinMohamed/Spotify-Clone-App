@@ -10,4 +10,18 @@
         android:name="com.seif.spotifyclone.ui.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/songFragment"
+        android:name="com.seif.spotifyclone.ui.fragments.SongFragment"
+        android:label="fragment_song"
+        tools:layout="@layout/fragment_song" />
+
+    <action
+        android:id="@+id/globalActionToSongFragment"
+        app:destination="@+id/songFragment"
+        app:enterAnim="@anim/slide_up"
+        app:exitAnim="@anim/stationary"
+        app:popEnterAnim="@anim/stationary"
+        app:popExitAnim="@anim/slide_down"/>
 </navigation>
