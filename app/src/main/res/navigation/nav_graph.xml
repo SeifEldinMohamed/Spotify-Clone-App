@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/songFragment"
-        android:name="com.seif.spotifyclone.ui.fragments.SongFragment"
+        android:name="com.seif.spotifyclone.ui.fragments.PlayingSongFragment"
         android:label="fragment_song"
         tools:layout="@layout/fragment_song" />
 

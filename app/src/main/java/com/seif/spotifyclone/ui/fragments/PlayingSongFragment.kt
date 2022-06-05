@@ -22,7 +22,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class SongFragment : BottomSheetDialogFragment() {
+class PlayingSongFragment : BottomSheetDialogFragment() {
 
     @Inject
     lateinit var glide: RequestManager

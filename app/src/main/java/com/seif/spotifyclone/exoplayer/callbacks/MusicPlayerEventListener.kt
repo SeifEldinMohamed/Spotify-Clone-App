@@ -9,11 +9,6 @@ class MusicPlayerEventListener(
     private val musicService: MusicService
 ) : Player.Listener {
 
-
-
-    /** replace down code to above
-     * */
-
     override fun onPlaybackStateChanged(playbackState: Int) {
         super.onPlaybackStateChanged(playbackState)
         if(playbackState == Player.STATE_READY){

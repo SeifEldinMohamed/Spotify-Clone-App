@@ -39,19 +39,19 @@ class FirebaseMusicSource @Inject constructor(
         songs = allSongs.map { song ->
             MediaMetadataCompat.Builder()
                 .putString(METADATA_KEY_ARTIST, song.singer)
-                .putString(METADATA_KEY_DISPLAY_SUBTITLE, song.singer)
-                .putString(METADATA_KEY_DISPLAY_DESCRIPTION, song.singer)
                 .putString(METADATA_KEY_MEDIA_ID, song.mediaId)
                 .putString(METADATA_KEY_TITLE, song.title)
                 .putString(METADATA_KEY_DISPLAY_TITLE, song.title)
-//                .putString(METADATA_KEY_ALBUM, song.album)
+                .putString(METADATA_KEY_DISPLAY_ICON_URI, song.imageUrl)
+                .putString(METADATA_KEY_MEDIA_URI, song.songUrl)
+                .putString(METADATA_KEY_ALBUM_ART_URI, song.imageUrl) // Album image
+                .putString(METADATA_KEY_DISPLAY_SUBTITLE, song.singer)
+                .putString(METADATA_KEY_DISPLAY_DESCRIPTION, song.singer)
+                .putString(METADATA_KEY_ALBUM, song.album)
 //                .putString(METADATA_KEY_YEAR, song.releasedYear)
 //                .putString(METADATA_KEY_GENRE, song.type)
-                .putString(METADATA_KEY_ARTIST, song.singer)
-                .putString(METADATA_KEY_ALBUM_ARTIST, song.singer)
-                .putString(METADATA_KEY_DISPLAY_ICON_URI, song.imageUrl)
-                .putString(METADATA_KEY_ALBUM_ART_URI, song.imageUrl) // Album image
-                .putString(METADATA_KEY_MEDIA_URI, song.songUrl)
+             //   .putString(METADATA_KEY_ARTIST, song.singer)
+             //   .putString(METADATA_KEY_ALBUM_ARTIST, song.singer)
                 .build()
         }
     }
@@ -88,7 +88,6 @@ class FirebaseMusicSource @Inject constructor(
                 // loop over each of these lambda functions
                 onReadyListeners.forEach {  listener ->
                     listener(state == STATE_INITIALIZED)
-
                 }
             }
         }
