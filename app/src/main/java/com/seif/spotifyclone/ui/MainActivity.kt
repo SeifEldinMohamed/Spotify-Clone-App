@@ -2,16 +2,22 @@ package com.seif.spotifyclone.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.RequestManager
+import com.google.android.material.snackbar.Snackbar
+import com.seif.spotifyclone.R
 import com.seif.spotifyclone.adapters.SwipeSongAdapter
 import com.seif.spotifyclone.data.entities.Song
 import com.seif.spotifyclone.databinding.ActivityMainBinding
+import com.seif.spotifyclone.exoplayer.isPlaying
 import com.seif.spotifyclone.exoplayer.toSong
 import com.seif.spotifyclone.utils.Status
 import com.seif.spotifyclone.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Error
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -27,6 +33,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var glide: RequestManager
     private var currentPlayingSong: Song? = null
 
+    private var playBackState: PlaybackStateCompat? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -34,6 +42,23 @@ class MainActivity : AppCompatActivity() {
 
         subscribeToObservers()
         binding.viewPagerSong.adapter = swipeSongAdapter
+
+        binding.viewPagerSong.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) { // called each time we swipe in our viewPager
+                super.onPageSelected(position)
+                if (playBackState?.isPlaying == true)
+                    mainViewModel.playOrToggleSong(swipeSongAdapter.songs[position])
+                else // pause state (not playing)
+                    currentPlayingSong = swipeSongAdapter.songs[position]
+
+            }
+        })
+
+        binding.playPauseImageView.setOnClickListener {
+            currentPlayingSong?.let {
+                mainViewModel.playOrToggleSong(it, true)
+            }
+        }
     }
 
 
@@ -57,7 +82,9 @@ class MainActivity : AppCompatActivity() {
                                 glide.load((currentPlayingSong ?: songs[0]).imageUrl)
                                     .into(binding.currentSongImageView)
                             }
-                            switchViewPagerToCurrentSong(currentPlayingSong ?: return@observe) // just display the current song by default
+                            switchViewPagerToCurrentSong(
+                                currentPlayingSong ?: return@observe
+                            ) // just display the current song by default
                             Log.d("main", currentPlayingSong.toString())
 
                         }
@@ -74,8 +101,46 @@ class MainActivity : AppCompatActivity() {
             currentPlayingSong = it.toSong()
             glide.load(currentPlayingSong?.imageUrl).into(binding.currentSongImageView)
             switchViewPagerToCurrentSong(currentPlayingSong ?: return@observe)
-            Log.d("main", currentPlayingSong.toString()+"   - current")
+            Log.d("main", currentPlayingSong.toString() + "   - current")
 
+        }
+        // will be called every time playBackState changes (pause, play, prepared)
+        mainViewModel.playbackState.observe(this) {
+            playBackState = it
+            // update image view according to state
+            binding.playPauseImageView.setImageResource(
+                if (playBackState?.isPlaying == true) R.drawable.ic_pause else R.drawable.ic_play
+            )
+        }
+        // used this Event Class to prevent showing our snackBar twice if the screen is rotated
+        mainViewModel.isConnected.observe(this) {
+            it?.getContentIfNotHandled()?.let { result ->
+                when (result.status) {
+                    Status.ERROR -> {
+                        Snackbar.make(
+                            binding.mainConstraintLayout,
+                            result.message ?: "unknown error occurred!!",
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+                    else -> Unit // do nothing
+                }
+            }
+        }
+
+        mainViewModel.networkError.observe(this) {
+            it?.getContentIfNotHandled()?.let { result ->
+                when (result.status) {
+                    Status.ERROR -> {
+                        Snackbar.make(
+                            binding.mainConstraintLayout,
+                            result.message ?: "unknown error occurred!!",
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+                    else -> Unit // do nothing
+                }
+            }
         }
     }
 }
