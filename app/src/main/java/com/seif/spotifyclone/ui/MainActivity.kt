@@ -17,7 +17,6 @@ import com.seif.spotifyclone.exoplayer.toSong
 import com.seif.spotifyclone.utils.Status
 import com.seif.spotifyclone.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Error
 import javax.inject.Inject
 
 @AndroidEntryPoint
