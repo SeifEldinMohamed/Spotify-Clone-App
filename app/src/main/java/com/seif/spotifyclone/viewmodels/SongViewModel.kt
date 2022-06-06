@@ -36,8 +36,9 @@ class SongViewModel @Inject constructor(
             while(true) { // not infinite loop bec the this coroutine will be cancelled when viewModel ended
                 val pos = playbackState.value?.currentPlaybackPosition
                 if(curPlayerPosition.value != pos) {
-                    _curPlayerPosition.postValue(pos!!)
                     _curSongDuration.postValue(MusicService.currentSongDuration)
+                    _curPlayerPosition.postValue(pos!!)
+
                 }
                 // important for cancellation of coroutine ( update seekbar by 10 times a second)
                 delay(UPDATE_PLAYER_POSITION_INTERVAL) // delay 100L

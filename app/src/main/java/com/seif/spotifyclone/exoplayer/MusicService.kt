@@ -9,6 +9,7 @@ import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.media.MediaBrowserServiceCompat
+import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
@@ -84,7 +85,8 @@ class MusicService : MediaBrowserServiceCompat() { // it's called MediaBrowserSe
             MusicPlayerNotificationListener(this)
         ) { // will be called when current song switched
             // update current song duration so we can observe on that in our fragments
-            currentSongDuration = exoPlayer.duration
+            if ( exoPlayer.duration != C.TIME_UNSET)
+                 currentSongDuration = exoPlayer.duration
         }
 
         // will called every time user choose a new song

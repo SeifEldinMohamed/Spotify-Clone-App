@@ -47,7 +47,7 @@ class FirebaseMusicSource @Inject constructor(
                 .putString(METADATA_KEY_ALBUM_ART_URI, song.imageUrl) // Album image
                 .putString(METADATA_KEY_DISPLAY_SUBTITLE, song.singer)
                 .putString(METADATA_KEY_DISPLAY_DESCRIPTION, song.singer)
-                .putString(METADATA_KEY_ALBUM, song.album)
+               // .putString(METADATA_KEY_ALBUM, song.album)
 //                .putString(METADATA_KEY_YEAR, song.releasedYear)
 //                .putString(METADATA_KEY_GENRE, song.type)
              //   .putString(METADATA_KEY_ARTIST, song.singer)
